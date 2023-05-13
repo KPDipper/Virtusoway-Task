@@ -1,5 +1,24 @@
 const Notes=require('../models/notesModels')
 
+
+
+exports.checkBody=(req,res,next)=>{
+
+    if(!req.body.notes_name||!req.body.notes_description){
+          return res.status(401).json({
+              staus:'FAIL',
+              message:"Incomplete Credentials"
+          })
+      }else if(!req.body.notes_name.match(/^[A-Za-z]/)) {
+          return res.status(401).json({
+              staus:'FAIL',
+              message:"Note name not contain any number."
+          })
+      }
+      
+      next()
+  }
+  
 exports.addNotes=async(req,res)=>{
 
     try{
